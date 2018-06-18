@@ -8,8 +8,23 @@ permalink: /projects/
 Group Members: Spencer Eanes, Kris Rye, Shane Kosieradzki  
 Advisor: Prof. Bob Eisinger  
 Summary: Developed a mathematical model to determine the optimal placement of electric vehicle charging stations, and proposed a plan to convert an entire nation from gas to electric vehicles.  
-[Submission](/pdfs/CoMAP.pdf)  
+Submission: [CoMAP.pdf](/pdfs/CoMAP.pdf)  
 [Results](http://www.comap.com/undergraduate/contests/mcm/contests/2018/results/2018_ICM_Problem_D_Results.pdf) - [Honorable Mention](/pdfs/CoMAP_cert.pdf)  
+
+__2D-Quickhull Mathematica Implementation__  
+Group Members: Spencer Eanes, Taran Besant  
+Final Project for Modern Computational Mathematics  
+Teacher: [Prof. Matthew Wright](https://mlwright.org)  
+Summary: Implemented the [Quickhull algorithm](https://en.wikipedia.org/wiki/Quickhull), 
+an algorithm to compute the points that determine the convex hull in a plane.  
+Submission: [Notebook](/pdfs/Besant_Eanes_Final_Project.nb)  
+
+__Procedural Terrain Generation__  
+Group Members: Spencer Eanes, Taran Besant  
+Midterm Project for Modern Computational Math  
+Teacher: [Prof. Matthew Wright](https://mlwright.org)  
+Submission: [Notebook](/pdfs/Midterm_Terrain.nb)
+
 
 __StoBooks Mobile Application__  
 Group Members: Spencer Eanes, Brodie Thiede, Jacob Cabbage  
