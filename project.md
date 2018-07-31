@@ -23,13 +23,14 @@ Final Project for Modern Computational Mathematics
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
 Summary: Implemented the [Quickhull algorithm](https://en.wikipedia.org/wiki/Quickhull), 
 an algorithm to compute the points that determine the convex hull in a plane. Mathematica notebook available upon request.  
-Submission: [Quickhull.nb](/pdfs/Besant_Eanes_Final_Project.nb) 
+Submission: [Quickhull.nb](/pdfs/Quickhull.nb)  
 
 __Procedural Terrain Generation__  
 Group Members: Spencer Eanes, Taran Besant  
 Midterm Project for Modern Computational Math  
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
-Summary: Implemented two methods for 2D noisy terrain generation in Mathematica. Notebook available upon request.  
+Summary: Implemented two methods for 2D noisy terrain generation in Mathematica.  
+Submission: [Terrain.nb](/pdfs/Terrain.nb)  
 
 
 __StoBooks Mobile Application__  
