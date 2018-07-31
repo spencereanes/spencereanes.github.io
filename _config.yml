@@ -17,9 +17,7 @@ title: Spencer Eanes
 email: spencer.eanes@gmail.com
 author: Spencer Eanes
 description: >- # this means to ignore newlines until "baseurl:"
-  This is my official homepage. I attempt to keep this website up to date
-  with my current goings-on. If you find any issues with this website feel
-  free to contact me. Site documentation is available on GitHub.
+  Spencer Eanes official homepage. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  spencereanes
