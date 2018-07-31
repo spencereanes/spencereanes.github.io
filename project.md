@@ -3,6 +3,11 @@ layout: page
 title: Projects
 permalink: /projects/
 ---
+[__USCLAP Fall 2017 Winner__](https://www.causeweb.org/usproc/usclap/2017/fall/winners)  
+Group Members: Spencer Eanes, Penelope Lancrete, Emma Daggett  
+Advisor: Prof. Paul Roback
+Summary: Won the introductory statistics category submission with paper, "Risk Factors for Teen Alcohol Use."
+Submission: [Risk Factors for Teen Alcohol Use](https://www.causeweb.org/usproc/sites/default/files/usclap/2017-2/Risk_Factors_for_Teen_Alcohol_Use.pdf) 
 
 [__CoMAP ICM 2018__](http://www.comap.com/undergraduate/contests/) - Control Group 87361  
 Group Members: Spencer Eanes, Kris Rye, Shane Kosieradzki  
@@ -30,4 +35,4 @@ __StoBooks Mobile Application__
 Group Members: Spencer Eanes, Brodie Thiede, Jacob Cabbage  
 Final Project for Mobile Computing Apps Class  
 Summary: Created a mobile application through react native, javascript, and node.js to allow students to sell and purchase books. App was served by a Java server connected to a PostGreSQL backend.  
-Working version no longer available. Code available at ...  
+Working version no longer available. Code available upon request.
