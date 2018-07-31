@@ -23,7 +23,7 @@ Final Project for Modern Computational Mathematics
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
 Summary: Implemented the [Quickhull algorithm](https://en.wikipedia.org/wiki/Quickhull), 
 an algorithm to compute the points that determine the convex hull in a plane.  
-Submission: [Notebook](/pdfs/Besant_Eanes_Final_Project.nb)  
+Submission: [Notebook](/pdfs/Besant_Eanes_Final_Project.txt)  
 
 __Procedural Terrain Generation__  
 Group Members: Spencer Eanes, Taran Besant  
