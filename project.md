@@ -3,11 +3,12 @@ layout: page
 title: Projects
 permalink: /projects/
 ---
-[__USCLAP Fall 2017 Winner__](https://www.causeweb.org/usproc/usclap/2017/fall/winners)  
+[__USCLAP Fall 2017__](https://www.causeweb.org/usproc/usclap/2017/fall/winners)  
 Group Members: Spencer Eanes, Penelope Lancrete, Emma Daggett  
-Advisor: Prof. Paul Roback
-Summary: Won the introductory statistics category submission with paper, "Risk Factors for Teen Alcohol Use."
-Submission: [Risk Factors for Teen Alcohol Use](https://www.causeweb.org/usproc/sites/default/files/usclap/2017-2/Risk_Factors_for_Teen_Alcohol_Use.pdf) 
+Advisor: Prof. Paul Roback  
+Summary: Won the introductory statistics category submission with paper, "Risk Factors for Teen Alcohol Use."  
+Submission: [Risk Factors for Teen Alcohol Use](https://www.causeweb.org/usproc/sites/default/files/usclap/2017-2/Risk_Factors_for_Teen_Alcohol_Use.pdf  
+Results: First prize winner.  
 
 [__CoMAP ICM 2018__](http://www.comap.com/undergraduate/contests/) - Control Group 87361  
 Group Members: Spencer Eanes, Kris Rye, Shane Kosieradzki  
