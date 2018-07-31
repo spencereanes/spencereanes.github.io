@@ -1,0 +1,1279 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     53945,       1271]
+NotebookOptionsPosition[     49949,       1202]
+NotebookOutlinePosition[     50323,       1218]
+CellTagsIndexPosition[     50280,       1215]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Determining Convex Hulls with Quickhull Algorithm", "Title",
+ CellChangeTimes->{{3.7360177676045218`*^9, 
+  3.736017780591636*^9}},ExpressionUUID->"75978c57-8de2-43ed-8a8b-\
+60a1a581b9a8"],
+
+Cell[CellGroupData[{
+
+Cell["Taran Besant and Spencer Eanes", "Chapter",
+ CellChangeTimes->{{3.736017783519224*^9, 
+  3.736017792671497*^9}},ExpressionUUID->"18aff95d-0593-4e80-a382-\
+ecb2c8c126f4"],
+
+Cell["\<\
+The basic idea behind this project is to find the set of points in a 2d plane \
+that contains all other points in a convex shape in the least number of points.
+The algorithm we choose for this is the quickhull algorithm. More information \
+about this algorithm can be found on wikipedia, and in our presentation slides.
+Motivation for this project can be found in submitted presentation slides.\
+\>", "Text",
+ CellChangeTimes->{{3.7360250430554395`*^9, 3.7360251198972855`*^9}, {
+  3.736027431390546*^9, 
+  3.736027434651746*^9}},ExpressionUUID->"ea831d7b-2fa6-4da2-bab4-\
+8503deea6b83"],
+
+Cell[CellGroupData[{
+
+Cell["XtremeP", "Section",
+ CellChangeTimes->{{3.735951171696371*^9, 
+  3.7359511739336033`*^9}},ExpressionUUID->"accec2d3-e32c-4fcf-854a-\
+6d12fe478d26"],
+
+Cell["\<\
+Calculate the farthest left and farthest right most points in a given data \
+set. in the cast that two points share the same extreme x value, the function \
+returns the one closer to the midpoint of the data set, for simplicity.
+   @arg hull - a set of points to create a convex hull around\
+\>", "Text",
+ CellChangeTimes->{{3.7360271810568542`*^9, 
+  3.736027183828072*^9}},ExpressionUUID->"08aa220f-4b6d-4077-8738-\
+780686743eba"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"xtremeP", "[", "hull_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"x", "=", 
+       RowBox[{"hull", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "<", " ", 
+         RowBox[{"Length", "[", "hull", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"hull", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"x", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+           RowBox[{"x", "=", 
+            RowBox[{"hull", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", "+", "1"}], "]"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"hull", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "\[Equal]", 
+               RowBox[{"x", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Abs", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"hull", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "-", "50"}], "]"}], ">", 
+                  RowBox[{"Abs", "[", 
+                   RowBox[{
+                    RowBox[{"x", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", "50"}], "]"}]}], ",",
+                  " ", ",", 
+                 RowBox[{"x", "=", 
+                  RowBox[{"hull", "[", 
+                   RowBox[{"[", 
+                    RowBox[{"i", "+", "1"}], "]"}], "]"}]}]}], 
+                "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"y", "=", 
+       RowBox[{"hull", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "<", " ", 
+         RowBox[{"Length", "[", "hull", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"hull", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"y", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+           RowBox[{"y", "=", 
+            RowBox[{"hull", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", "+", "1"}], "]"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"hull", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "\[Equal]", 
+               RowBox[{"y", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Abs", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"hull", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", "+", "1"}], "]"}], "]"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "-", "50"}], "]"}], "<", 
+                  RowBox[{"Abs", "[", 
+                   RowBox[{
+                    RowBox[{"y", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "-", "50"}], "]"}]}], ",", 
+                 RowBox[{"y", "=", 
+                  RowBox[{"hull", "[", 
+                   RowBox[{"[", 
+                    RowBox[{"i", "+", "1"}], "]"}], "]"}]}], ","}], 
+                "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "y"}], "}"}], "]"}], ";"}]}], "\[IndentingNewLine]",
+     "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7354790270683975`*^9, 3.7354792090169053`*^9}, {
+  3.7354792403092356`*^9, 3.735479264394722*^9}, {3.735479352902072*^9, 
+  3.7354793862728457`*^9}, {3.7354794969848228`*^9, 3.735479578090996*^9}, {
+  3.7354846957557926`*^9, 3.735484704028627*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"b23b1cf3-9639-4da1-b78e-aee4ec90be50"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["HullPartition", "Section",
+ CellChangeTimes->{{3.735951138228875*^9, 
+  3.735951141203142*^9}},ExpressionUUID->"916ee680-257b-47b7-a9d7-\
+e562918ccf21"],
+
+Cell["\<\
+A module that partitions the remaining points not in the convex hull into two \
+groups : those above a line segment and those below based on y value. This \
+runs into a problem with vertical lines, because the slope is returned as a \
+complex infinity which we can' t work with in the future (See Hull Partition \
+I).
+   @arg allpts - the set of points to be partitioned.
+   @arg x - the first point used to create the partitioning line.
+   @arg y - the second point used to create the partitioning line.\
+\>", "Text",
+ CellChangeTimes->{{3.736027233732831*^9, 
+  3.7360272401811113`*^9}},ExpressionUUID->"b12e1e88-e672-4da9-81a1-\
+dd90b149dff0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"hullPartition", "[", 
+    RowBox[{"allpts_", ",", "x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "m", ",", "b", ",", "Coordy", ",", "tempList", ",", "listAbove", ",", 
+       "listBelow"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"m", "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"y", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "-", 
+          RowBox[{"x", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"y", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "-", 
+          RowBox[{"x", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"b", "=", 
+       RowBox[{
+        RowBox[{"x", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "-", 
+        RowBox[{"m", "*", 
+         RowBox[{"x", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"listAbove", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"listBelow", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "0"}], ",", 
+        RowBox[{"i", "\[LessEqual]", " ", "100"}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Coordy", "=", 
+          RowBox[{
+           RowBox[{"m", "*", "i"}], "+", "b"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"tempList", "=", 
+          RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"l", "=", "1"}], ",", 
+           RowBox[{"l", "\[LessEqual]", " ", 
+            RowBox[{"Length", "[", "allpts", "]"}]}], ",", 
+           RowBox[{"l", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"allpts", "[", 
+                 RowBox[{"[", "l", "]"}], "]"}], "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "\[Equal]", "i"}], ",", 
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"tempList", ",", 
+                RowBox[{"allpts", "[", 
+                 RowBox[{"[", "l", "]"}], "]"}]}], "]"}], ","}], 
+             "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"k", "=", "1"}], ",", 
+           RowBox[{"k", "\[LessEqual]", " ", 
+            RowBox[{"Length", "[", "tempList", "]"}]}], ",", 
+           RowBox[{"k", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"tempList", "[", 
+                 RowBox[{"[", "k", "]"}], "]"}], "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ">", "Coordy"}], ",", " ", 
+              RowBox[{"AppendTo", "[", 
+               RowBox[{"listAbove", ",", 
+                RowBox[{"tempList", "[", 
+                 RowBox[{"[", "k", "]"}], "]"}]}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"tempList", "[", 
+                    RowBox[{"[", "k", "]"}], "]"}], "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", "Coordy"}], 
+                 ",", ",", 
+                 RowBox[{"AppendTo", "[", 
+                  RowBox[{"listBelow", ",", 
+                   RowBox[{"tempList", "[", 
+                    RowBox[{"[", "k", "]"}], "]"}]}], "]"}]}], 
+                "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"{", 
+        RowBox[{"listAbove", ",", "listBelow"}], "}"}], "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7354796272784433`*^9, 3.7354796449851017`*^9}, {
+  3.7354797946100335`*^9, 3.7354797970844173`*^9}, {3.7354799815352335`*^9, 
+  3.735480047770136*^9}, {3.7354809544678106`*^9, 3.735481012618328*^9}, {
+  3.735485098857027*^9, 3.735485115799346*^9}, {3.7355115327067084`*^9, 
+  3.7355115415951977`*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"77182136-a80c-4951-bab4-864ec4a935e6"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["PtTrans", "Section",
+ CellChangeTimes->{{3.7359511497423944`*^9, 
+  3.735951150639765*^9}},ExpressionUUID->"90ec3c5a-bd5b-4003-8698-\
+d766e0e0997d"],
+
+Cell["\<\
+This takes a 2d point, pt, and and two more points, P and Q, which are \
+endpoints of a line.  
+It finds the equation of the line through P and Q using the fit function, \
+which returns the RHS of the equation of a line in the form y = mx + b. 
+It then find a rotation matrix using Mathematica\[CloseCurlyQuote]s built in \
+function by taking the ArcTangent of the slope of the line between P and Q.
+\tNote the adjustment here, and taking the inverse outside. This is because a \
+standard rotation matrix rotates counter-clockwise, and we want to rotate \
+clockwise.
+We then adjust the point down by the y-intercept of the line, and apply the \
+rotation matrix to the point.
+
+This function also has two special cases, if the line determined by P and Q \
+is horizontal or vertical.
+In these cases the result of the Fit function does not play nicely with the \
+rest of the code, so we create these special cases.
+If the line is vertical, we rotate 3\[Pi]/2 radians. If they are horizontal, \
+we only adjust down by the y intercept.\
+\>", "Text",
+ CellChangeTimes->{{3.7360193587334347`*^9, 3.73601941301722*^9}, {
+  3.73601949812772*^9, 3.7360195884708376`*^9}, {3.736019620635561*^9, 
+  3.73601970046705*^9}, {3.7360200300959067`*^9, 3.7360200592432384`*^9}, {
+  3.7360200945529814`*^9, 3.736020129291031*^9}, {3.736020162111142*^9, 
+  3.736020165096874*^9}, {3.736020248943053*^9, 3.736020267131263*^9}, {
+  3.736020334852767*^9, 3.736020374473522*^9}, {3.7360204312432528`*^9, 
+  3.736020535866911*^9}},ExpressionUUID->"b4013107-dfd6-45d4-90e5-\
+a51ba7f5a52e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PtTrans", "[", 
+   RowBox[{"pt_", ",", 
+    RowBox[{"{", 
+     RowBox[{"P_", ",", "Q_"}], "}"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"point", " ", "=", " ", "pt"}], ",", "f1", ",", "yint", ",", 
+      "A", ",", "x"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"P", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "-", 
+         RowBox[{"Q", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], "\[Equal]", "0"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Print", "[", "\"\<Line is vertical\>\"", "]"}], ";"}], 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"A", "=", 
+         RowBox[{"Inverse", "@", 
+          RowBox[{"RotationMatrix", "[", 
+           RowBox[{"\[Pi]", "/", "2"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", 
+         RowBox[{"A", ".", "point"}], "]"}], ";"}]}], "\[IndentingNewLine]", 
+      "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"P", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "-", 
+         RowBox[{"Q", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "\[Equal]", "0"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Print", "[", "\"\<Line is horizontal\>\"", "]"}], ";"}], 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"yint", " ", "=", " ", 
+         RowBox[{"Q", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"point", "-=", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "yint"}], "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", "point", "]"}], ";"}]}], "\[IndentingNewLine]",
+       "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"f1", "=", 
+      RowBox[{"Fit", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"P", ",", "Q"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "x"}], "}"}], ",", "x"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"yint", "=", 
+      RowBox[{"f1", "/.", 
+       RowBox[{"x", "\[Rule]", "0"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"point", "-=", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "yint"}], "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Print", "[", "point", "]"}], ";"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"A", "=", 
+      RowBox[{"Inverse", "@", 
+       RowBox[{"RotationMatrix", "[", 
+        RowBox[{"(", 
+         RowBox[{"ArcTan", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{
+            RowBox[{"f1", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "/.", 
+            RowBox[{"x", "\[Rule]", "1"}]}]}], "]"}], ")"}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Print", "[", 
+        RowBox[{"A", ".", "point"}], "]"}], ";"}], "*)"}], 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"A", ".", "point"}], "]"}], ";"}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.735938963869443*^9, 3.73593897009359*^9}, {
+   3.735942901771082*^9, 3.735942935755187*^9}, {3.735942965849392*^9, 
+   3.73594300550881*^9}, {3.735943059411069*^9, 3.735943109401256*^9}, {
+   3.735943176392068*^9, 3.7359431878418913`*^9}, {3.735943407732579*^9, 
+   3.7359434108155303`*^9}, {3.7359435405728226`*^9, 
+   3.7359436017097645`*^9}, {3.735944209179617*^9, 3.735944251247785*^9}, {
+   3.735944768561207*^9, 3.7359447851197357`*^9}, {3.735945099525872*^9, 
+   3.7359451450176497`*^9}, {3.7359451810508327`*^9, 
+   3.7359451823222666`*^9}, {3.735945468730065*^9, 3.7359455046672263`*^9}, {
+   3.7359456142087555`*^9, 3.735945624515973*^9}, {3.7359456915054398`*^9, 
+   3.735945734991074*^9}, {3.7359465006605887`*^9, 3.735946500709668*^9}, {
+   3.7359465694816246`*^9, 3.735946573191718*^9}, {3.73594750564921*^9, 
+   3.735947506779875*^9}, {3.735947540687168*^9, 3.7359477299366655`*^9}, {
+   3.7359477919376917`*^9, 3.7359477983113165`*^9}, {3.7359480856206884`*^9, 
+   3.7359481175543385`*^9}, {3.735948316205679*^9, 3.735948370206293*^9}, {
+   3.7359484092820635`*^9, 3.7359484561032553`*^9}, {3.735948551802168*^9, 
+   3.735948552036731*^9}, {3.735950208437334*^9, 3.7359503296508408`*^9}, {
+   3.735951102242754*^9, 3.7359511477943115`*^9}, {3.735951203732334*^9, 
+   3.735951231488599*^9}, {3.7359513081390123`*^9, 3.735951322966209*^9}, {
+   3.735951391919854*^9, 3.735951411184926*^9}, {3.7359514430257463`*^9, 
+   3.7359514541953106`*^9}, {3.735951490843315*^9, 3.7359515225925956`*^9}, {
+   3.735951576523932*^9, 3.735951581730686*^9}, {3.7359517698150635`*^9, 
+   3.735951777379304*^9}, {3.7360176878310494`*^9, 3.7360176915141296`*^9}, {
+   3.736019543095145*^9, 3.736019548256287*^9}, {3.7360196033985863`*^9, 
+   3.7360196169804764`*^9}, {3.7360203672696238`*^9, 
+   3.7360203704164815`*^9}, {3.7360205387202187`*^9, 3.736020550115344*^9}, {
+   3.7360238538400955`*^9, 3.736023863826788*^9}, {3.736023894829824*^9, 
+   3.736023916188838*^9}, {3.736023958891792*^9, 3.73602396009461*^9}, 
+   3.7360257700803328`*^9, {3.7360258141814537`*^9, 3.7360258552666435`*^9}, {
+   3.736025915749736*^9, 3.736025916485242*^9}, 3.7360264474489555`*^9},
+ CellLabel->"In[25]:=",ExpressionUUID->"b388ab57-5a6c-4b4b-bb28-fad45333cab9"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["HullPartition1", "Section",
+ CellChangeTimes->{{3.735951157651326*^9, 
+  3.73595116010052*^9}},ExpressionUUID->"3dd853fd-4fe7-4d6f-94d5-\
+23295746e853"],
+
+Cell["\<\
+This is a more general version of HullPartition that works in all cases.
+This function implements the PtTrans method on all the points in the passed \
+to it in the first argument, pts.
+It uses the map function to apply PtTrans to all  the points and stores their \
+output, where the line determined by P and Q is treated as the x-axis in \
+transPts.
+It constructs a list of two sublists, the first of which is the indices of \
+points above, those with transformed y-values greater than 0, and those \
+below, with y-value less than 0.
+It returns the this sorted set of two lists.
+
+Note that if a point is exactly on the line, it is ignored. This is intended \
+behavior, because if a point is on the line we don\[CloseCurlyQuote]t want to \
+include it. \
+\>", "Text",
+ CellChangeTimes->{{3.736020412278967*^9, 3.736020428956155*^9}, {
+  3.736024299560664*^9, 3.7360244483344154`*^9}, {3.7360272545418425`*^9, 
+  3.736027281706745*^9}},ExpressionUUID->"2a626ea7-ed3c-42e6-aa79-\
+f2a8902c7961"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"hullPartition1", "[", 
+   RowBox[{"pts_", ",", 
+    RowBox[{"{", 
+     RowBox[{"P_", ",", "Q_"}], "}"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"transPts", ",", 
+      RowBox[{"topPtInd", "=", 
+       RowBox[{"{", "}"}]}], ",", 
+      RowBox[{"botPtInd", "=", 
+       RowBox[{"{", "}"}]}], ",", "topPts", ",", "botPts"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"transPts", " ", "=", " ", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"PtTrans", "[", 
+          RowBox[{"#", ",", 
+           RowBox[{"{", 
+            RowBox[{"P", ",", "Q"}], "}"}]}], "]"}], "&"}], ",", "pts"}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Print", "[", 
+        RowBox[{"\"\<transPts: \>\"", ",", "transPts"}], "]"}], ";"}], "*)"}],
+      "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"transPts", "[", 
+             RowBox[{"[", "ix", "]"}], "]"}], "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ">", "0"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"AppendTo", "[", 
+            RowBox[{"topPtInd", ",", "ix"}], "]"}], ";"}]}], 
+         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"transPts", "[", 
+             RowBox[{"[", "ix", "]"}], "]"}], "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "<", "0"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"AppendTo", "[", 
+            RowBox[{"botPtInd", ",", "ix"}], "]"}], ";"}]}], 
+         "\[IndentingNewLine]", "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"ix", ",", "1", ",", 
+         RowBox[{"Length", "[", "pts", "]"}]}], "}"}]}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "indices", " ", "of", " ", "all", " ", "top", " ", "and", " ", "bottom",
+        " ", "points", " ", "found"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "if", " ", "a", " ", "point", " ", "is", " ", "on", " ", "the", " ", 
+       "line", " ", "it", " ", "is", " ", "ignored"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"topPts", " ", "=", " ", 
+      RowBox[{"pts", "[", 
+       RowBox[{"[", "topPtInd", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"botPts", " ", "=", " ", 
+      RowBox[{"pts", "[", 
+       RowBox[{"[", "botPtInd", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"{", 
+       RowBox[{"topPts", ",", "botPts"}], "}"}], "]"}], ";"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.7359457390440245`*^9, 3.735945842811683*^9}, {
+   3.7359458748824453`*^9, 3.73594597492013*^9}, {3.735946005417912*^9, 
+   3.7359461343089952`*^9}, {3.7359461841574774`*^9, 
+   3.7359462135819073`*^9}, {3.735946275907011*^9, 3.7359463112833395`*^9}, {
+   3.7359463936280017`*^9, 3.73594639814147*^9}, {3.7359485570777435`*^9, 
+   3.735948557194061*^9}, {3.7359486074904957`*^9, 3.7359486698392143`*^9}, {
+   3.735948730716265*^9, 3.7359487352739353`*^9}, {3.7359488243010087`*^9, 
+   3.7359488590379686`*^9}, {3.7360256652406206`*^9, 3.73602570902593*^9}, {
+   3.73602607451007*^9, 3.7360260814906363`*^9}, {3.736026144872123*^9, 
+   3.7360261553957214`*^9}, {3.736026191891627*^9, 3.736026219231367*^9}, {
+   3.7360262849642625`*^9, 3.736026288898053*^9}, {3.736026335844352*^9, 
+   3.736026336354344*^9}, 3.736026669171459*^9},
+ CellLabel->"In[26]:=",ExpressionUUID->"141300bd-ee26-4d4c-9ba8-d983f8e05139"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Distance and Sorting", "Section",
+ CellChangeTimes->{{3.7359501456180706`*^9, 
+  3.735950162835266*^9}},ExpressionUUID->"7612c5ce-1754-447d-8350-\
+0d5dc5b8de34"],
+
+Cell["\<\
+PointLineDistance takes a a point pt, and a tuple of points, s1 and s2. It \
+uses mathematica\[CloseCurlyQuote]s built in Euclidean distance and \
+projection functions to find the shortest distance from the point to the line.\
+\>", "Text",
+ CellChangeTimes->{{3.7360244578612328`*^9, 
+  3.7360245440385647`*^9}},ExpressionUUID->"4ea16f73-aea1-4d06-8c8f-\
+717ee811c999"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PointLineDistance", "[", 
+    RowBox[{"pt_", ",", 
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", "s2_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"tp", "=", 
+       RowBox[{"s1", "-", "pt"}]}], "}"}], ",", 
+     RowBox[{"EuclideanDistance", "[", 
+      RowBox[{"tp", ",", 
+       RowBox[{"Projection", "[", 
+        RowBox[{"tp", ",", 
+         RowBox[{"s2", "-", "s1"}]}], "]"}]}], "]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{
+  3.7357348185613265`*^9, {3.7359383291907487`*^9, 3.735938352379285*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"fe9f6722-1f96-4fae-8670-56b13716ba44"],
+
+Cell["\<\
+This function implements PointLineDistance on a set of points, pts, and \
+returns the index of the point furthest from the line.\
+\>", "Text",
+ CellChangeTimes->{{3.7360245477855563`*^9, 
+  3.7360245774214735`*^9}},ExpressionUUID->"0d6df75b-f7d6-4519-8d95-\
+14d6d41f624f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Furthest", "[", 
+    RowBox[{"pts_", ",", 
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", "s2_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "dists", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"dists", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"PointLineDistance", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"{", 
+             RowBox[{"s1", ",", "s2"}], "}"}]}], "]"}], "&"}], ",", "pts"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"Position", "[", 
+        RowBox[{"dists", ",", 
+         RowBox[{"Max", "[", "dists", "]"}]}], "]"}], "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7355154148207645`*^9, 3.735515419691201*^9}, {
+  3.7355155608892345`*^9, 3.7355155610274076`*^9}, {3.7355168631957035`*^9, 
+  3.735516865613806*^9}, {3.7355169399407825`*^9, 3.735516940074709*^9}, {
+  3.7357348546902065`*^9, 3.7357348970072527`*^9}, {3.735734996889818*^9, 
+  3.735734999749965*^9}, {3.7357363689747915`*^9, 3.7357364094874115`*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"aa3b25c1-f3f3-48ff-9cbd-022c518eb10e"],
+
+Cell["\<\
+This functions sorts the points passed to it by their x-value.\
+\>", "Text",
+ CellChangeTimes->{{3.736024581096839*^9, 
+  3.736024598182234*^9}},ExpressionUUID->"a5bc5890-1f7e-4980-b502-\
+15858e306b09"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SortPts", "[", "pts_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Return", "@", 
+      RowBox[{"SortBy", "[", 
+       RowBox[{"pts", ",", "First"}], "]"}]}], ";"}]}], "\[IndentingNewLine]",
+    "]"}]}]], "Input",
+ CellChangeTimes->{{3.7359381148591075`*^9, 3.735938132291461*^9}, {
+  3.7359382308395987`*^9, 3.7359382371781073`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"7d72366f-1541-40f0-9d64-1c66a2d2e128"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Find Hull", "Section",
+ CellChangeTimes->{{3.735950151202756*^9, 
+  3.735950153561557*^9}},ExpressionUUID->"5ba4884e-e8c1-4294-ad4b-\
+d816f8853965"],
+
+Cell["\<\
+This is a recursive function that implements hullPartition1 to find the \
+complex hull using divide and conquer.
+This is the main implementation of the quickhull algorithm.
+It\[CloseCurlyQuote]s input are:
+\tS - the list of all points in the hull.
+\tP, Q - the two most extreme x and y points.
+\tcHull - all the points in the hull so far, this is mainly used so that \
+recursive calls can track what has been found so far.
+\ttb - this is an indicator that should be 1 or 2, which tells if we are \
+finding the hull for the top or bottom half. It is used to index the return \
+from hullPartition1.
+If S is empty, we do nothing.
+We then find the furthest point in S from the line determined by P and Q and \
+add it to the convexHull.
+Then, we find all the points that are in S but not within the polygon \
+determined by the points of the convexHull. 
+In order for the previous step to work, the set of points in the convex hull \
+needs to be sorted into the correct order so that the polygon is correct, so \
+we first use the SortPts function.
+We only add points if they are not region members of the polygon, using \
+mathematica\[CloseCurlyQuote]s built in function.
+Then, if there are points in S that are not contained in the polygon, we \
+partition them into those above and below the two new line segments created \
+with the new furthest point and the two previous line segments.
+We then recursively run the FindHull algorithm on the correct half of of the \
+partitioned points. 
+This will terminate once there are no points outside the polygon, and return \
+the set of points found.\
+\>", "Text",
+ CellChangeTimes->{{3.736024601733487*^9, 
+  3.736024955580795*^9}},ExpressionUUID->"b770bd3b-4fdc-4612-a65f-\
+ae877766bc37"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FindHull", "[", 
+   RowBox[{"S_", ",", 
+    RowBox[{"{", 
+     RowBox[{"P_", ",", "Q_"}], "}"}], ",", "cHull_", ",", 
+    RowBox[{"tb_:", "1"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"convexHull", " ", "=", " ", "cHull"}], ",", " ", 
+      "furthestIndex", ",", 
+      RowBox[{"maxDist", "=", "0"}], ",", "S1", ",", "S2", ",", "newPts"}], 
+     "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"S", "\[NotEqual]", 
+        RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Print", "[", "S", "]"}], ";"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"furthestIndex", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Furthest", "[", 
+            RowBox[{"S", ",", 
+             RowBox[{"{", 
+              RowBox[{"P", ",", "Q"}], "}"}]}], "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Print", "[", "furthestIndex", "]"}], ";"}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Print", "[", 
+           RowBox[{"S", "[", 
+            RowBox[{"[", "furthestIndex", "]"}], "]"}], "]"}], ";"}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"convexHull", ",", 
+          RowBox[{"S", "[", 
+           RowBox[{"[", "furthestIndex", "]"}], "]"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Print", "[", "convexHull", "]"}], ";"}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Print", "[", 
+           RowBox[{"\"\<convexHull: \>\"", ",", " ", "convexHull"}], "]"}], 
+          ";"}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"newPts", "=", 
+         RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"convexHull", "=", 
+         RowBox[{"SortPts", "[", "convexHull", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"!", 
+             RowBox[{"RegionMember", "[", 
+              RowBox[{
+               RowBox[{"Polygon", "[", "convexHull", "]"}], ",", 
+               RowBox[{"S", "[", 
+                RowBox[{"[", "ix", "]"}], "]"}]}], "]"}]}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"AppendTo", "[", 
+              RowBox[{"newPts", ",", 
+               RowBox[{"S", "[", 
+                RowBox[{"[", "ix", "]"}], "]"}]}], "]"}], ";"}]}], 
+           "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"ix", ",", "1", ",", 
+            RowBox[{"Length", "[", "S", "]"}]}], "}"}]}], 
+         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Print", "[", 
+           RowBox[{"\"\<newPts: \>\"", ",", "newPts"}], "]"}], ";"}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"newPts", "\[NotEqual]", 
+           RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"S1", "=", 
+            RowBox[{
+             RowBox[{"hullPartition1", "[", 
+              RowBox[{"newPts", ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"S", "[", 
+                  RowBox[{"[", "furthestIndex", "]"}], "]"}], ",", "P"}], 
+                "}"}]}], "]"}], "[", 
+             RowBox[{"[", "tb", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"S2", "=", 
+            RowBox[{
+             RowBox[{"hullPartition1", "[", 
+              RowBox[{"newPts", ",", 
+               RowBox[{"{", 
+                RowBox[{"Q", ",", 
+                 RowBox[{"S", "[", 
+                  RowBox[{"[", "furthestIndex", "]"}], "]"}]}], "}"}]}], 
+              "]"}], "[", 
+             RowBox[{"[", "tb", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           "\[IndentingNewLine]", 
+           RowBox[{"convexHull", " ", "=", 
+            RowBox[{"FindHull", "[", 
+             RowBox[{"S1", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"S", "[", 
+                 RowBox[{"[", "furthestIndex", "]"}], "]"}], ",", "P"}], 
+               "}"}], ",", "convexHull", ",", "tb"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"convexHull", " ", "=", " ", 
+            RowBox[{"FindHull", "[", 
+             RowBox[{"S2", ",", 
+              RowBox[{"{", 
+               RowBox[{"Q", ",", 
+                RowBox[{"S", "[", 
+                 RowBox[{"[", "furthestIndex", "]"}], "]"}]}], "}"}], ",", 
+              "convexHull", ",", "tb"}], "]"}]}], ";"}]}], 
+         "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"Return", "@", "convexHull"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7354847914030414`*^9, 3.735484804702767*^9}, {
+   3.7354848357777643`*^9, 3.735484841095007*^9}, {3.7354849196185136`*^9, 
+   3.735484921373329*^9}, {3.7354849697522717`*^9, 3.735484974286203*^9}, {
+   3.7355107121004086`*^9, 3.7355107269142895`*^9}, {3.735511053333248*^9, 
+   3.7355110740596075`*^9}, {3.7355114190203443`*^9, 3.735511427367445*^9}, {
+   3.7355114998630886`*^9, 3.735511502485519*^9}, {3.7355125096561327`*^9, 
+   3.735512510560587*^9}, {3.7355125519680815`*^9, 3.7355125559158525`*^9}, {
+   3.7355126202881527`*^9, 3.7355126840004263`*^9}, {3.7355127519565616`*^9, 
+   3.7355128195435543`*^9}, {3.7355131675466843`*^9, 3.735513174751867*^9}, {
+   3.7355133331571608`*^9, 3.7355134068780375`*^9}, {3.7355136439828186`*^9, 
+   3.735513663211641*^9}, {3.735513721084049*^9, 3.7355137212875695`*^9}, {
+   3.7355140861460094`*^9, 3.735514093173709*^9}, {3.7355145950351477`*^9, 
+   3.735514697381816*^9}, {3.7355147363518925`*^9, 3.735514745461306*^9}, {
+   3.7355147859991617`*^9, 3.7355148903617625`*^9}, {3.735514929081894*^9, 
+   3.7355149741345396`*^9}, {3.7355150096919155`*^9, 
+   3.7355150660322084`*^9}, {3.7355150965743923`*^9, 3.735515140137049*^9}, {
+   3.735515435392724*^9, 3.7355154401031094`*^9}, {3.7355159869515095`*^9, 
+   3.7355160058189583`*^9}, {3.735516074405547*^9, 3.7355161490370493`*^9}, {
+   3.735516804681087*^9, 3.735516822047973*^9}, {3.735736099696186*^9, 
+   3.7357361428587513`*^9}, {3.735736193502503*^9, 3.735736201179757*^9}, {
+   3.735736415651203*^9, 3.73573643564182*^9}, {3.7357366786541247`*^9, 
+   3.7357366986830463`*^9}, {3.7357370525412893`*^9, 3.735737097530014*^9}, {
+   3.7357374924454117`*^9, 3.735737494733245*^9}, {3.735745821621229*^9, 
+   3.735745825485693*^9}, {3.7357462330861998`*^9, 3.7357462443060355`*^9}, {
+   3.7357462951993628`*^9, 3.7357463032607937`*^9}, {3.735746463854968*^9, 
+   3.735746484877266*^9}, {3.73574652935612*^9, 3.735746544245788*^9}, {
+   3.735746786786768*^9, 3.7357468222512283`*^9}, {3.735747464409805*^9, 
+   3.735747469983533*^9}, {3.7359382531894298`*^9, 3.7359382587301903`*^9}, {
+   3.7359383100312495`*^9, 3.7359383567035465`*^9}, {3.73594887055974*^9, 
+   3.7359488852349105`*^9}, 3.735950106925394*^9, 3.7359518746092663`*^9, 
+   3.735952394887952*^9, {3.7359525188562*^9, 3.7359525227231503`*^9}, {
+   3.7359526094356613`*^9, 3.7359526424963675`*^9}, {3.7360239881087604`*^9, 
+   3.736023991812279*^9}, {3.736024044361614*^9, 3.736024047190217*^9}, {
+   3.736024238514248*^9, 3.7360242410428715`*^9}, {3.7360266839266973`*^9, 
+   3.736026693733798*^9}},
+ CellLabel->"In[30]:=",ExpressionUUID->"8f4e6d13-2909-4df6-8bca-16ca213c6f99"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Quickhull Driver", "Section",
+ CellChangeTimes->{{3.7360177599626937`*^9, 3.7360177604345646`*^9}, {
+  3.7360249665541306`*^9, 
+  3.7360249704768906`*^9}},ExpressionUUID->"407ae87f-0845-4400-8b5e-\
+c3c9531d6622"],
+
+Cell["\<\
+This function acts like a C++ driver program. It calls all constituent parts \
+of the quickhull function:
+\tfind the extreme x points.
+\tpartition the set on the line segment determined by these points.
+\tFund the upper and lower hull using the FindHull function, and finally
+\tReturn these two lists.
+
+We include the delete case clauses because of a simple error that can be \
+caused. If a point had exactly the same x-coordinate as one of the extreme \
+points, the algorithm would sometimes sort them in the incorrect order \
+causing the correct hull to display as if it was incorrect. By doing \
+deletecases and then prepending and appending the first and last hull points, \
+we make sure that everything is in the order that we want.\
+\>", "Text",
+ CellChangeTimes->{{3.73602497374047*^9, 3.7360250298251143`*^9}, {
+  3.736026715048252*^9, 3.736026732259714*^9}, {3.736026771643677*^9, 
+  3.7360268431403017`*^9}},ExpressionUUID->"08cfdda4-7f17-4eb6-b891-\
+47199ee1beca"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"QuickHull", "[", "pts_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"xpts", ",", "part", ",", "hullPtsTop", ",", "hullPtsBot"}], 
+     "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"xpts", " ", "=", 
+      RowBox[{"xtremeP", "[", "pts", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"xpts", "=", 
+      RowBox[{"SortPts", "[", "xpts", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"part", " ", "=", " ", 
+      RowBox[{"hullPartition1", "[", 
+       RowBox[{"pts", ",", "xpts"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"hullPtsTop", "=", 
+      RowBox[{"FindHull", "[", 
+       RowBox[{
+        RowBox[{"part", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", "xpts", ",", "xpts", ",", "1"}],
+        "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"hullPtsBot", " ", "=", " ", 
+      RowBox[{"FindHull", "[", 
+       RowBox[{
+        RowBox[{"part", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], ",", "xpts", ",", "xpts", ",", "2"}],
+        "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"hullPtsTop", "=", 
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{"hullPtsTop", ",", 
+        RowBox[{"xpts", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"hullPtsTop", " ", "=", " ", 
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{"hullPtsTop", ",", 
+        RowBox[{"xpts", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"PrependTo", "[", 
+      RowBox[{"hullPtsTop", ",", 
+       RowBox[{"xpts", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"hullPtsTop", ",", 
+       RowBox[{"xpts", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"hullPtsBot", "=", 
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{"hullPtsBot", ",", 
+        RowBox[{"xpts", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"hullPtsBot", " ", "=", " ", 
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{"hullPtsBot", ",", 
+        RowBox[{"xpts", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"PrependTo", "[", 
+      RowBox[{"hullPtsBot", ",", 
+       RowBox[{"xpts", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"hullPtsBot", ",", 
+       RowBox[{"xpts", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"{", 
+       RowBox[{"hullPtsTop", ",", "hullPtsBot"}], "}"}], "]"}], ";"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.736017845009079*^9, 3.7360178956724405`*^9}, {
+   3.7360179672288427`*^9, 3.736017994428007*^9}, {3.7360180487833943`*^9, 
+   3.7360180656288924`*^9}, {3.736018248327734*^9, 3.736018270550665*^9}, {
+   3.736018338021755*^9, 3.7360183503845253`*^9}, {3.7360185838763933`*^9, 
+   3.736018586361715*^9}, {3.7360186389698114`*^9, 3.7360186433229623`*^9}, {
+   3.736018853861164*^9, 3.736018854002158*^9}, {3.7360255724448495`*^9, 
+   3.7360256112165585`*^9}, {3.736026346114024*^9, 3.7360264319845343`*^9}, {
+   3.7360265326369715`*^9, 3.736026649361022*^9}, 3.736026700102122*^9},
+ CellLabel->"In[31]:=",ExpressionUUID->"aacacfbc-6be2-415d-baaa-3383cea70331"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Output", "Section",
+ CellChangeTimes->{{3.7359521386820974`*^9, 
+  3.735952139226638*^9}},ExpressionUUID->"d1598c0c-c2f1-4001-92a6-\
+bf3b8eed08ce"],
+
+Cell["\<\
+In our output, a random selection of points is generated in a circle of \
+radius 10 with center at the origin. This is because with other large amounts \
+of randomly generated points the hull was very boxlike, so this gives a more \
+interesting visual output. The QuickHull module returns two lists of points : \
+the points making up the top half of the convex polygon and the points making \
+up to bottom half. These are shown individually, and then together.
+
+Interestingly, we notice that as the number of points is increased, the hull \
+more and more precisely approximates the exact boundaries of the region \
+specified in the point selection. Cool!\
+\>", "Text",
+ CellChangeTimes->{{3.736027303165411*^9, 3.736027305201606*^9}, {
+  3.7360275426067853`*^9, 
+  3.736027542981745*^9}},ExpressionUUID->"657db6e1-1ad5-474d-918c-\
+4bae0de3bb9f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"n", "=", "100"}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"total", " ", "number", " ", "of", " ", "points"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"pts", " ", "=", " ", 
+    RowBox[{"RandomPoint", "[", 
+     RowBox[{
+      RowBox[{"Polygon", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0"}], "}"}]}], "}"}], "]"}], ",", "n"}], "]"}]}],
+    ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "an", " ", "alternative", " ", "input", " ", "that", " ", "is", " ", "in", 
+    " ", "a", " ", "circle"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"pts", " ", "=", " ", 
+     RowBox[{"RandomPoint", "[", 
+      RowBox[{
+       RowBox[{"Disk", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", "1"}], "]"}], ",", "n"}], 
+      "]"}]}], ";"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Hull", "=", 
+  RowBox[{"QuickHull", "[", "pts", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.73601828256627*^9, 3.7360183298199415`*^9}, {
+   3.7360183691193433`*^9, 3.7360183889958515`*^9}, {3.736018426995117*^9, 
+   3.7360184509639273`*^9}, {3.736018609879258*^9, 3.7360186185706825`*^9}, 
+   3.736018828376125*^9, {3.7360189637690587`*^9, 3.736018991296286*^9}, {
+   3.7360198049682884`*^9, 3.736019808635974*^9}, {3.7360201800548134`*^9, 
+   3.736020194869833*^9}, {3.7360203961466417`*^9, 3.7360203984422317`*^9}, {
+   3.736023932710766*^9, 3.736023935331231*^9}, 3.7360240561258974`*^9, {
+   3.736026855386078*^9, 3.73602688622878*^9}, {3.7360269466516266`*^9, 
+   3.7360269468905725`*^9}, {3.736027039966651*^9, 3.736027073856881*^9}, {
+   3.736027333672499*^9, 3.736027355502927*^9}, {3.7360274481308184`*^9, 
+   3.736027456885377*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"2cb4b217-5075-45ea-b1f1-46ee6b73d439"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"a", " ", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"pts", ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"b", "=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{"Hull", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"c", "=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{"Hull", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{"a", ",", "b"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{"a", ",", "c"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", 
+   RowBox[{"a", ",", "b", ",", "c"}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.735949835289112*^9, 3.7359498424810376`*^9}, {
+  3.7359520366905265`*^9, 3.7359520398855267`*^9}, {3.7360183960390835`*^9, 
+  3.736018435254395*^9}, {3.7360187729530573`*^9, 3.7360187912436037`*^9}, {
+  3.7360188940718856`*^9, 3.7360189115510387`*^9}},
+ CellLabel->"In[35]:=",ExpressionUUID->"c969a78b-25eb-4f1c-bc35-9e28e5bd07d5"],
+
+Cell["\<\
+Note that mathematica also has a built in function that will do this. \
+Mathematica\[CloseCurlyQuote]s function also works in 3d. Though this doesn\
+\[CloseCurlyQuote]t have an option to print specific points in the hull, we \
+can see on close observation that the vertices appear to be in the same \
+locations.\
+\>", "Text",
+ CellChangeTimes->{{3.736027547188872*^9, 3.7360275647067823`*^9}, {
+  3.7360279157154245`*^9, 
+  3.7360279666030874`*^9}},ExpressionUUID->"f6928157-8fbf-4e9c-a139-\
+410116c5a84b"],
+
+Cell[BoxData[
+ RowBox[{"ConvexHullMesh", "[", "pts", "]"}]], "Input",
+ CellChangeTimes->{{3.7360275086413608`*^9, 3.7360275269972687`*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"d8d51ba8-5427-4a60-a35a-d418e64bf045"],
+
+Cell["\<\
+As we can see, mathematica\[CloseCurlyQuote]s implementation is several \
+orders of magnitude faster than ours... Oh well! \
+\>", "Text",
+ CellChangeTimes->{{3.736027761293358*^9, 
+  3.736027776291012*^9}},ExpressionUUID->"461cbf54-8759-4d6f-bff7-\
+9804728216cf"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"AbsoluteTiming", "[", 
+   RowBox[{"QuickHull", "[", "pts", "]"}], "]"}], "[", 
+  RowBox[{"[", "1", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AbsoluteTiming", "[", 
+   RowBox[{"ConvexHullMesh", "[", "pts", "]"}], "]"}], "[", 
+  RowBox[{"[", "1", "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.736027569329505*^9, 3.736027590575385*^9}, {
+  3.7360276237882786`*^9, 3.736027636450361*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"1cad2f6a-10be-44b6-afea-52f14db21fe0"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1920, 976},
+WindowMargins->{{-9, Automatic}, {Automatic, -9}},
+Magnification:>1.25 Inherited,
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 194, 3, 121, "Title",ExpressionUUID->"75978c57-8de2-43ed-8a8b-60a1a581b9a8"],
+Cell[CellGroupData[{
+Cell[799, 29, 175, 3, 86, "Chapter",ExpressionUUID->"18aff95d-0593-4e80-a382-ecb2c8c126f4"],
+Cell[977, 34, 597, 10, 99, "Text",ExpressionUUID->"ea831d7b-2fa6-4da2-bab4-8503deea6b83"],
+Cell[CellGroupData[{
+Cell[1599, 48, 154, 3, 83, "Section",ExpressionUUID->"accec2d3-e32c-4fcf-854a-6d12fe478d26"],
+Cell[1756, 53, 442, 8, 71, "Text",ExpressionUUID->"08aa220f-4b6d-4077-8738-780686743eba"],
+Cell[2201, 63, 5392, 133, 492, "Input",ExpressionUUID->"b23b1cf3-9639-4da1-b78e-aee4ec90be50"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7630, 201, 158, 3, 64, "Section",ExpressionUUID->"916ee680-257b-47b7-a9d7-e562918ccf21"],
+Cell[7791, 206, 656, 12, 154, "Text",ExpressionUUID->"b12e1e88-e672-4da9-81a1-dd90b149dff0"],
+Cell[8450, 220, 4677, 113, 516, "Input",ExpressionUUID->"77182136-a80c-4951-bab4-864ec4a935e6"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[13164, 338, 154, 3, 64, "Section",ExpressionUUID->"90ec3c5a-bd5b-4003-8698-d766e0e0997d"],
+Cell[13321, 343, 1571, 27, 265, "Text",ExpressionUUID->"b4013107-dfd6-45d4-90e5-a51ba7f5a52e"],
+Cell[14895, 372, 5596, 123, 540, "Input",ExpressionUUID->"b388ab57-5a6c-4b4b-bb28-fad45333cab9"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[20528, 500, 158, 3, 64, "Section",ExpressionUUID->"3dd853fd-4fe7-4d6f-94d5-23295746e853"],
+Cell[20689, 505, 1000, 19, 210, "Text",ExpressionUUID->"2a626ea7-ed3c-42e6-aa79-f2a8902c7961"],
+Cell[21692, 526, 3911, 93, 468, "Input",ExpressionUUID->"141300bd-ee26-4d4c-9ba8-d983f8e05139"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[25640, 624, 167, 3, 64, "Section",ExpressionUUID->"7612c5ce-1754-447d-8350-0d5dc5b8de34"],
+Cell[25810, 629, 379, 7, 67, "Text",ExpressionUUID->"4ea16f73-aea1-4d06-8c8f-717ee811c999"],
+Cell[26192, 638, 694, 20, 54, "Input",ExpressionUUID->"fe9f6722-1f96-4fae-8670-56b13716ba44"],
+Cell[26889, 660, 282, 6, 67, "Text",ExpressionUUID->"0d6df75b-f7d6-4519-8d95-14d6d41f624f"],
+Cell[27174, 668, 1269, 30, 168, "Input",ExpressionUUID->"aa3b25c1-f3f3-48ff-9cbd-022c518eb10e"],
+Cell[28446, 700, 212, 5, 67, "Text",ExpressionUUID->"a5bc5890-1f7e-4980-b502-15858e306b09"],
+Cell[28661, 707, 536, 13, 131, "Input",ExpressionUUID->"7d72366f-1541-40f0-9d64-1c66a2d2e128"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[29234, 725, 154, 3, 64, "Section",ExpressionUUID->"5ba4884e-e8c1-4294-ad4b-d816f8853965"],
+Cell[29391, 730, 1736, 32, 675, "Text",ExpressionUUID->"b770bd3b-4fdc-4612-a65f-ae877766bc37"],
+Cell[31130, 764, 7978, 172, 1106, "Input",ExpressionUUID->"8f4e6d13-2909-4df6-8bca-16ca213c6f99"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[39145, 941, 218, 4, 64, "Section",ExpressionUUID->"407ae87f-0845-4400-8b5e-c3c9531d6622"],
+Cell[39366, 947, 985, 18, 371, "Text",ExpressionUUID->"08cfdda4-7f17-4eb6-b891-47199ee1beca"],
+Cell[40354, 967, 3647, 83, 768, "Input",ExpressionUUID->"aacacfbc-6be2-415d-baaa-3383cea70331"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[44038, 1055, 153, 3, 64, "Section",ExpressionUUID->"d1598c0c-c2f1-4001-92a6-bf3b8eed08ce"],
+Cell[44194, 1060, 855, 15, 127, "Text",ExpressionUUID->"657db6e1-1ad5-474d-918c-4bae0de3bb9f"],
+Cell[45052, 1077, 2131, 51, 132, "Input",ExpressionUUID->"2cb4b217-5075-45ea-b1f1-46ee6b73d439"],
+Cell[47186, 1130, 1186, 29, 204, "Input",ExpressionUUID->"c969a78b-25eb-4f1c-bc35-9e28e5bd07d5"],
+Cell[48375, 1161, 516, 10, 71, "Text",ExpressionUUID->"f6928157-8fbf-4e9c-a139-410116c5a84b"],
+Cell[48894, 1173, 218, 3, 35, "Input",ExpressionUUID->"d8d51ba8-5427-4a60-a35a-d418e64bf045"],
+Cell[49115, 1178, 273, 6, 43, "Text",ExpressionUUID->"461cbf54-8759-4d6f-bff7-9804728216cf"],
+Cell[49391, 1186, 518, 11, 60, "Input",ExpressionUUID->"1cad2f6a-10be-44b6-afea-52f14db21fe0"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

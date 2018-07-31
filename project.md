@@ -22,7 +22,8 @@ Group Members: Spencer Eanes, Taran Besant
 Final Project for Modern Computational Mathematics  
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
 Summary: Implemented the [Quickhull algorithm](https://en.wikipedia.org/wiki/Quickhull), 
-an algorithm to compute the points that determine the convex hull in a plane. Mathematica notebook available upon request.    
+an algorithm to compute the points that determine the convex hull in a plane. Mathematica notebook available upon request.  
+Submission: [Quickhull.nb](/pdfs/Besant_Eanes_Final_Project.nb) 
 
 __Procedural Terrain Generation__  
 Group Members: Spencer Eanes, Taran Besant  
