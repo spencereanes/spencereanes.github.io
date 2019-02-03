@@ -3,6 +3,11 @@ layout: page
 title: Projects
 permalink: /projects/
 ---
+[__NCES Cyberbullying DataPoint__](https://nces.ed.gov/pubsearch/pubsinfo.asp?pubid=2019053)  
+Supervisor: Rachel Hansen  
+Summary: Created a DataPoint with summary statistics regarding cyberbullying based on the School Survey on Crime and Safety.  
+Publication: [Cyberbullying DataPoint](/pdfs/datapoint.pdf)  
+
 [__USCLAP Fall 2017__](https://www.causeweb.org/usproc/usclap/2017/fall/winners)  
 Group Members: Spencer Eanes, Penelope Lancrete, Emma Daggett  
 Advisor: Prof. Paul Roback  
