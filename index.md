@@ -7,6 +7,6 @@ layout: home
 
 Welcome to my website.  
 
-I am a rising junior at St. Olaf College, and study Computer Science, Math, and Statistics.  
+I am a junior at St. Olaf College, and study Computer Science, Math, and Statistics.  
 
 This website is a work in progress, and learning project.  
