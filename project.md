@@ -8,7 +8,7 @@ Final Project for Algorithms for Decision Making (Intro to Machine Learning)
 Summary: Scraped data on ~3000 fighters from [UfcStats.com](http://ufcstats.com/statistics/fighters), performed principal component analysis, and then compared k-means and hierarchical clustering.  
 Submission: [UFC_Analysis](/pdfs/final.html)  
 
-[__Polygon Visibility Algorithm__]  
+[__Polygon Visibility Algorithm__](https://math282.spencereanes.org)
 Final Project for Computational Geometry  
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
 Summary: Implemented a O(n^2 logn) time algorithm for computing all visibility edges between vertices of polygons in a plane.  
