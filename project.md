@@ -12,7 +12,7 @@ Submission: [UFC_Analysis](/pdfs/final.html)
 Final Project for Computational Geometry  
 Teacher: [Prof. Matthew Wright](https://mlwright.org)  
 Summary: Implemented a O(n^2 logn) time algorithm for computing all visibility edges between vertices of polygons in a plane.  
-Submission: Code available on my [github.](https://github.com/spencereanes) Here's a fun [RShiny demo.](https://math282.spencereanes.org) Summary mathematical paper available [here.](/pdfs/Polygon_Visility.pdf)  
+Submission: Code available on my [github.](https://github.com/spencereanes) Here's a fun [RShiny demo.](https://math282.spencereanes.org) Summary mathematical paper available [here.](/pdfs/Polygon_Visibility.pdf)  
 
 [__NCES Cyberbullying DataPoint__](https://nces.ed.gov/pubsearch/pubsinfo.asp?pubid=2019053)  
 Supervisor: Rachel Hansen  
