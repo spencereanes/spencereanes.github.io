@@ -14,3 +14,5 @@ I love working collaboratively to help people solve data-driven problems!
 This website is a work in progress and a learning project.  
 
 Check out one of my recent projects, a Principal-Components Analysis of UFC Fighters and their styles [here](/pdfs/final.html)!  
+
+<img src="/pdfs/final_files/figures-html/notable fighter pca2-1.png" width="500">
