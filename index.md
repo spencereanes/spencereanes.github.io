@@ -7,7 +7,9 @@ layout: home
 
 Welcome to my website.  
 
-I am a senior at St. Olaf College. I major in Math and Computer Science, and concentrate in Statistics and Data Science.  
+I am a Software Developer at [Epic](https://epic.com). 
+
+I graduated from St. Olaf in May 2020, where I majored in Math and Computer Science, and concentrated in Statistics and Data Science.  
 
 I love working collaboratively to help people solve data-driven problems!  
 
