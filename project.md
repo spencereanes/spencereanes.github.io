@@ -3,6 +3,15 @@ layout: page
 title: Projects
 permalink: /projects/
 ---
+
+__Factors Controlling Coral Skeletal U/Ca Ratios with Implications for their Use as a Proxy for Past Ocean Conditions__  
+Group Members: Spencer Eanes, Emily Patterson, Penelope Lancrete  
+Advisors: [Anne Gothmann](https://gothma1.wixsite.com/annemgothmann), Paul Roback  
+Summary: Year long research project through St. Olaf's Center for Interdisciplinary Research. This project is a statistical analysis of fossilized coral and it's implications as a proxy for past ocean conditions. An early version of this paper won 1st Prize in the [US Undegraduate Statistics Research Project competition](https://www.causeweb.org/usproc/usresp/2020/spring/winners). The paper is in review for publication with the American Journal of Undergraduate Research.
+
+[__Beyond Multiple Linear Regression Textbook__](https://bookdown.org/roback/bookdown-BeyondMLR/)  
+Helped modify and maintain code for bookdown textbook, and develop an answer key.
+
 __UFC Fighter PCA and Clustering Analysis__  
 Final Project for Algorithms for Decision Making (Intro to Machine Learning)  
 Summary: Scraped data on ~3000 fighters from [UfcStats.com](http://ufcstats.com/statistics/fighters), performed principal component analysis, and then compared k-means and hierarchical clustering.  
