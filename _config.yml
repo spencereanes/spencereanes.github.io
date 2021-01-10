@@ -17,7 +17,7 @@ title: Spencer Eanes
 email: spencer.eanes@gmail.com
 author: Spencer Eanes
 description: >- # this means to ignore newlines until "baseurl:"
-  Spencer Eanes official homepage. 
+  Official homepage. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  spencereanes
@@ -25,6 +25,8 @@ linkedin_username: spencereanes
 
 # Build settings
 markdown: kramdown
+kramdown:
+    input: GFM
 theme: minima
 plugins:
   - jekyll-feed
@@ -32,11 +34,11 @@ plugins:
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
